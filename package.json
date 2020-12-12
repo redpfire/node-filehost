@@ -1,0 +1,25 @@
+{
+  "name": "fh",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "aika",
+  "license": "MIT",
+  "scripts": {
+    "start": "node ./index.js",
+    "dev": "nodemon ./index.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "busboy": "^0.3.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.0",
+    "helmet": "^4.2.0",
+    "morgan": "^1.10.0",
+    "nanoid": "^3.1.20",
+    "nodemon": "^2.0.6",
+    "sqlite": "^4.0.18",
+    "sqlite3": "^5.0.0",
+    "upath": "^2.0.1"
+  }
+}
