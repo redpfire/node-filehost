@@ -17,9 +17,11 @@
     "helmet": "^4.2.0",
     "morgan": "^1.10.0",
     "nanoid": "^3.1.20",
-    "nodemon": "^2.0.6",
     "sqlite": "^4.0.18",
     "sqlite3": "^5.0.0",
     "upath": "^2.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
   }
 }

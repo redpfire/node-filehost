@@ -14,10 +14,10 @@ const config = require('./config.json');
 const nanoid = customAlphabet('DEQhd2uFteibPwq0SWBInTpA_jcZL5GKz3YCR14Ulk87Jors9vNHgfaOmMXy6Vx', 16);
 const app = express();
 
-const baseurl = 'https://localhost:3000/';
+const baseurl = 'https://up.appin.space/';
 
 open({
-    filename: './db.sqlite3',
+    filename: './volume/db.sqlite3',
     driver: sqlite3.Database
 }).then(async db => {
     await db.migrate({force: false });
@@ -39,20 +39,22 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(morgan('dev'));
 
+app.get('/', express.static(upath.joinSafe(__dirname, 'public/')));
+
 app.get('/:name', async (req, res, next) => {
     const name = req.params.name;
 
     const db = await open({
-        filename: './db.sqlite3',
+        filename: './volume/db.sqlite3',
         driver: sqlite3.Database
     });
 
     const q = await db.get('SELECT removed FROM files WHERE url=?', name);
 
-    if (!q) return res.status(404).send('404 File Not Found\n');
+    if (!q) return res.send('404 File Not Found\n');
     if (q.removed) return res.status(451).send('451 Unavailable For Legal Reasons\n');
 
-    const p = upath.joinSafe(__dirname, 'uploads/');
+    const p = upath.joinSafe(__dirname, 'volume/uploads/');
 
     return express.static(p, {index: q.url})(req, res, next);
 });
@@ -72,7 +74,7 @@ app.post('/', async (req, res) => {
         if (config.mime.indexOf(f.mimetype) != -1) return die('File has an invalid mimetype');
         
         const db = await open({
-            filename: './db.sqlite3',
+            filename: './volume/db.sqlite3',
             driver: sqlite3.Database
         });
 
@@ -88,10 +90,10 @@ app.post('/', async (req, res) => {
         const url = `${id}${ext}`;
 
         await db.run('INSERT INTO files (url, hash, ip) VALUES (?, ?, ?)',
-            [url, f.md5, req.connection.remoteAddress]
+            [url, f.md5, req.headers['x-original-forwarded-for']]
         );
 
-        f.mv(`./uploads/${url}`);
+        f.mv(upath.joinSafe(__dirname, `volume/uploads/${url}`));
         
         return res.send(`${baseurl}${url}\n`);
     }
