@@ -11,7 +11,7 @@ const open = require('sqlite').open;
 const upath = require('upath');
 
 const config = require('./config.json');
-const nanoid = customAlphabet('DEQhd2uFteibPwq0SWBInTpA_jcZL5GKz3YCR14Ulk87Jors9vNHgfaOmMXy6Vx', 16);
+const nanoid = customAlphabet('DEQhd2uFteibPwq0SWBInTpA_jcZL5GKz3YCR14Ulk87Jors9vNHgfaOmMXy6Vx', 7);
 const app = express();
 
 const baseurl = 'https://up.appin.space/';
