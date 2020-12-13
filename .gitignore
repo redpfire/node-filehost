@@ -1,8 +1,5 @@
-node_modules
-node_modules/*
-
-uploads
-uploads/*
+volume
+volume/*
 
 db.sqlite3
 yarn-error.log
