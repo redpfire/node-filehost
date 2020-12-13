@@ -14,8 +14,6 @@ const config = require('./config.json');
 const nanoid = customAlphabet('DEQhd2uFteibPwq0SWBInTpA_jcZL5GKz3YCR14Ulk87Jors9vNHgfaOmMXy6Vx', 7);
 const app = express();
 
-const baseurl = 'https://up.appin.space/';
-
 open({
     filename: './volume/db.sqlite3',
     driver: sqlite3.Database
@@ -82,7 +80,7 @@ app.post('/', async (req, res) => {
 
         if (q) {
             f.mv('/dev/null');
-            return res.send(`${baseurl}${q.url}\n`);
+            return res.send(`${config.baseurl}${q.url}\n`);
         }
 
         const id = await nanoid();
@@ -95,7 +93,7 @@ app.post('/', async (req, res) => {
 
         f.mv(upath.joinSafe(__dirname, `volume/uploads/${url}`));
         
-        return res.send(`${baseurl}${url}\n`);
+        return res.send(`${config.baseurl}${url}\n`);
     }
     catch (e) {
         console.error(e);

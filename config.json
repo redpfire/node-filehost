@@ -4,5 +4,6 @@
     "application/x-executable",
     "application/x-hdf5",
     "application/vnd.android.package-archive"
-  ]
+  ],
+  "baseurl": "https://up.appin.space/"
 }
